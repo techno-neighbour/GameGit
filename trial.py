@@ -1,32 +1,35 @@
 import time 
 import threading
 import random as rd
-from settings import g_func  # type: ignore
+from settings import g_func  
 ss = g_func()
 
 n = (rd.choice(list(ss.note.keys())))
 nk = ss.note[n]
-rv=list(ss.rooms.values())
+rv = list(ss.rooms.values())
 sk = rd.sample(rv,3) # keys
 sg = rd.sample(rv,3) # ghost
 sp = rd.sample(rv,2) # potion
-nt , nl= rd.choice(rv), rd.choice(rv) # note, password
+nt , nl = rd.choice(rv), rd.choice(rv) # note, password
+
 while True: # takes care so that note doesn't fall in locked room
     if nt == nl:
-        nt, ns= rd.choice(rv), rd.choice(rv)
+        nt, nl = rd.choice(rv), rd.choice(rv)
     else:
         break
+
 for a in sp:
     a.update({'item':'potion'})
 for i in sk:
     i.update({'item':'key'})
 for j in sg:
     j.update({'ghost':True,'attacked': False})
+    
 nt.update({'item': 'note'})
 nl.update({'locked': True, 'password': str(n)})
-print("note:",nt,"\nlocked:",nl,"\nghost:",sg)
 ss.rooms.update({'Door': {'west': 'Foyer'}})
 ss.rooms.update({'Hall': {'south': 'Hallway', 'east': 'Foyer', 'west': 'Library','north': 'Shrine'}})
+ss.rooms.update({'Hallway': {'north': 'Hall', 'east': 'Kitchen', 'south': 'Guestroom', 'west': 'Bedroom'}})
 
 inventory = {}
 current_room = 'Hall'
@@ -59,6 +62,7 @@ print("""
     'inventory' - see what you've collected
     'quit' - leave the game
 """)
+
 time.sleep(2)
 def countdown_timer(): # for the timer
     global time_up
@@ -67,7 +71,7 @@ def countdown_timer(): # for the timer
         time.sleep(1)  # wait for 1 second
     time_up = True  # time is up
 
-# start the countdown timer in a separate thread
+# to start the countdown timer in a separate thread
 timer_thread = threading.Thread(target=countdown_timer)
 
 def status():  # for health and location
@@ -77,6 +81,7 @@ def status():  # for health and location
         if health <= 20:
             print("Warning: Your health is low!")
 timer_thread.start()
+
 #                                  GAME PLAY CODE                                GAME PLAY CODE
 while not time_up:
     status()
@@ -90,6 +95,7 @@ while not time_up:
     if 'ghost' in ss.rooms[current_room] and not ss.rooms[current_room]['attacked']:
         if ss.ghost():
             break
+        health = ss.give_health()
         ss.rooms[current_room]['attacked'] = True  # mark the room as "ghost attacked"
 
     time.sleep(1)
