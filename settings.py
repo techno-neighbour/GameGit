@@ -88,7 +88,6 @@ class g_func:
             while True:
                 if s not in self.rooms[self.current_room]:
                     s = rd.choice(['north', 'south', 'east', 'west'])
-                    break
                 else:
                     break
             print(f"Too many wrong attempts. You're being sent {s}.")
