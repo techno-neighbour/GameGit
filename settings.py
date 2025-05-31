@@ -30,13 +30,13 @@ class g_func:
             '1711': "A journey marked one the first and last, but with a week's effort in.",
             '8080': 'Infinity repeats, with and without a belt, but within it, lies your finite path.',
             '3333': 'Infinity divided into pieces, make your choice with thesis.',
-            '1010': 'Two decades in the dual-bit system, is your algorithm.',
+            '1010': 'A decade in the dual-bit system, is your algorithm.',
             '2357': 'Small, yet indivisible forces stand in your way to freedom.',
             '9101': 'Everyone can have nine dreams and ten paths but only one destination.',
             '2468': 'Even in multiples, the path is yours to take.',
             '5678': 'Five moves forward, eight steps closer.',
-            '4812': "A cube's character, can decide your fate.",
-            '4242': 'The answer lies along the answer to the universe and everything.'
+            '4812': "A Cube's character, can decide your fate.",
+            '4242': 'The answer lies collinear with the answer to the universe and everything.'
         }
 
         self.inventory = {}
@@ -66,7 +66,7 @@ class g_func:
 
     def check_locked_room(self, room, attempts=0):
         if 'locked' in self.rooms[room] and self.rooms[room]['locked']:
-            print(f"\nThe {room} is locked.")
+            print(f"The {room} is locked.")
             while attempts < self.max_password_attempts:
                 password = input(f"Enter the Pin (----): ")
                 if password == self.rooms[room].get('password', ''):
@@ -86,14 +86,16 @@ class g_func:
                 else:
                     break
             print(f"Too many wrong attempts. You're being sent {s}.")
-            current_room = self.rooms[self.current_room][s]
+            self.current_room = self.rooms[self.current_room][s]
             return True  # Make player do nothing
         return False
 
     def ghost(self):  # For ghost
         time.sleep(1)
         print('\nOh no! A Ghost!')
+        time.sleep(1)
         print("The ghost attacks!")
+        time.sleep(1)
         d = {'strong': 40, 'N': 30, 'weak': 10}
         s = rd.choice(list(d.keys()))
         s1 = f' {s} ' if s != 'N' else ' '
@@ -103,8 +105,9 @@ class g_func:
             return True
         else:
             print(f"You were attacked by a{s1}ghost.\nYour health is now {self.health}.")
+            time.sleep(1)
         return False
-    
+
     def give_health(self):  # To assign the value of health
         return self.health
 
