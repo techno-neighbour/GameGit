@@ -18,7 +18,7 @@ You are a student staying as a paying guest in a mysterious house. Your patron t
 To run the python script, type the following command in your terminal
 
 ```cmd
-python main.py
+python game.py
 ```
    
 Then use commands like:
