@@ -31,19 +31,17 @@ ss.rooms.update({
 })
 
 inventory = {}
-current_room = 'Hall'
 health = 100
 time_up = False
 time_limit = 301
-
 print(nl)
 print("""
                             TEXT-BASED ESCAPE GAME
     =====================================================================
      You are a student who recently moved into a house as a paying guest.
-     During your stay, you find your landlord acting strangely. Before you
-     can find anything, you are trapped inside the house. You have 10 
-     minutes to escape, or you will be gunned down by the landlord.
+     In your stay, you find your Patron to act very strange. Before you
+     can find anything , you are trapped inside the house. You have 10 
+     minutes to escape , or you will be gunned down by the patron.
     ---------------------------------------------------------------------""")
 time.sleep(3)
 print("""
@@ -73,17 +71,17 @@ threading.Thread(target=countdown_timer, daemon=True).start()
 
 def status():
     time.sleep(1)
-    print(f"Current location: {current_room}\nCurrent health: {health}")
-    if health <= 20:
+    print(f"Current location: {ss.current_room}\nCurrent health: {ss.health}")
+    if ss.health <= 20:
         print("Warning: Your health is low!")
 
 while not time_up:
     status()
 
-    if ss.check_locked_room(current_room):
+    if ss.check_locked_room(ss.current_room):
         continue
 
-    room_data = ss.rooms[current_room]
+    room_data = ss.rooms[ss.current_room]
 
     if 'item' in room_data:
         print(f"You see a {room_data['item']} here.")
@@ -91,7 +89,7 @@ while not time_up:
     if room_data.get('ghost') and not room_data['attacked']:
         if ss.ghost():
             break
-        health = ss.give_health()
+        ss.health = ss.give_health()
         room_data['attacked'] = True
 
     time.sleep(1)
@@ -120,11 +118,11 @@ while not time_up:
             if 'ghost' in room_data:
                 room_data['attacked'] = False
 
-            if current_room == 'Foyer' and direction == 'east' and ss.inventory.get('key', 0) < ss.required_keys:
+            if ss.current_room == 'Foyer' and direction == 'east' and ss.inventory.get('key', 0) < ss.required_keys:
                 print("\nThe Door won't open! You need all 3 keys.")
             else:
-                current_room = room_data[direction]
-                print(f"You moved to the {current_room}.")
+                ss.current_room = room_data[direction]
+                print(f"You moved to the {ss.current_room}.")
         else:
             print("You can't go that way!\n")
 
@@ -151,7 +149,7 @@ while not time_up:
     else:
         print('Invalid command. Please enter a valid direction, item, or action.')
 
-    if current_room == 'Door' and ss.inventory.get('key', 0) == ss.required_keys:
+    if ss.current_room == 'Door' and ss.inventory.get('key', 0) == ss.required_keys:
         print("\nYou have made it to the exit and start to run. ", end='', flush=True)
         time.sleep(2)
         print('While you run, you start to think, ', end='', flush=True)
