@@ -2,6 +2,12 @@ import time
 import random as rd
 
 class g_func:
+    ghost_damage = {
+        'strong': 40,
+        'normal': 30,
+        'weak': 10
+    }
+
     def __init__(self):
         self.rooms = {
             'Foyer': {'north': 'Sunroom', 'east': 'Door', 'west': 'Hall', 'south': 'Kitchen'},
@@ -73,7 +79,7 @@ class g_func:
                     time.sleep(1)
                     print(f"You've unlocked the {room}!")
                     self.rooms[room]['locked'] = False
-                    return False  # Room is now unlocked
+                    return False
                 else:
                     time.sleep(1)
                     attempts += 1
@@ -87,19 +93,18 @@ class g_func:
                     break
             print(f"Too many wrong attempts. You're being sent {s}.")
             self.current_room = self.rooms[self.current_room][s]
-            return True  # Make player do nothing
+            return True
         return False
 
-    def ghost(self):  # For ghost
+    def ghost(self):
         time.sleep(1)
         print('\nOh no! A Ghost!')
         time.sleep(1)
         print("The ghost attacks!")
         time.sleep(1)
-        d = {'strong': 40, 'N': 30, 'weak': 10}
-        s = rd.choice(list(d.keys()))
-        s1 = f' {s} ' if s != 'N' else ' '
-        self.health -= d[s]
+        s = rd.choice(list(self.ghost_damage.keys()))
+        s1 = f' {s} ' if s != 'normal' else ' '
+        self.health -= self.ghost_damage[s]
         if self.health <= 0:
             print("The ghost has defeated you! You died...")
             return True
@@ -108,10 +113,10 @@ class g_func:
             time.sleep(1)
         return False
 
-    def give_health(self):  # To assign the value of health
+    def give_health(self):
         return self.health
 
-    def use_potion(self):  # For health potion
+    def use_potion(self):
         time.sleep(1)
         d = {'Super': 40, 'Normal': 30, 'Weak': 10}
         s = rd.choice(list(d.keys()))
