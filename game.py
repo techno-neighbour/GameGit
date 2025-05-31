@@ -39,14 +39,14 @@ print("""
                             TEXT-BASED ESCAPE GAME
     =====================================================================
      You are a student who recently moved into a house as a paying guest.
-     In your stay, you find your Patron to act very strange. Before you
-     can find anything , you are trapped inside the house. You have 10 
-     minutes to escape , or you will be gunned down by the patron.
+     During your stay, you find your patron acting very strangely. Before
+     you can find anything, you are trapped inside the house. You have 10 
+     minutes to escape, or else you will be gunned down by the patron.
     ---------------------------------------------------------------------""")
-time.sleep(3)
+time.sleep(8)
 print("""
     GAME OBJECTIVE:
-    Find 3 keys, avoid the ghosts, and unlock the exit before to win!
+    Find 3 keys, avoid the ghosts, and escape before the timer runs out!
     ----------------------------------------------------------------------  """, end='')
 time.sleep(3)
 
