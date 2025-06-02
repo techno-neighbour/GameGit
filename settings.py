@@ -1,5 +1,8 @@
 import time
 import random as rd
+import json
+
+SAVE_FILE = 'save.json'
 
 class g_func:
     ghost_damage = {
@@ -52,7 +55,15 @@ class g_func:
         self.max_password_attempts = 5
         self.time_up = False
 
-    def f(self):
+    def status(self):
+        time.sleep(1)
+        print(f"Current location: {self.current_room}")
+        time.sleep(1)
+        print(f"Current health: {self.health}")
+        if self.health <= 20:
+            print("WARNING: Your health is low!")
+
+    def death_by_patron(self):
         print("\nOh no! The patron has found you.", flush=True, end='')
         time.sleep(4)
         print(" He fires three bullet's from his pistol,", flush=True, end='')
@@ -69,6 +80,74 @@ class g_func:
         time.sleep(2)
         print('.', flush=True, end='')
         time.sleep(1)
+        
+    def dash(self,a):
+        print("    ",end="")
+        for i in range(69):
+            print(a,end="",flush=True)
+            time.sleep(0.05)
+        print("")
+
+    def game_intro(self):
+        time.sleep(1)
+        print("""
+                                    TEXT-BASED ADVENTURE GAME""")
+        self.dash("=")
+
+        with open("intro.txt", "r") as file: #opens the intro file
+            for line in file:
+                words = line.split()
+                print("    ", end='')  #indentation for the text
+                for word in words:
+                    for char in word:
+                        print(char, end='', flush=True) #prints each character with a delay
+                        time.sleep(0.05)  
+                    print(' ', end='', flush=True)  #adds a space between words
+                    time.sleep(0.05)  
+                    if word.endswith('.'):
+                        time.sleep(0.5)
+                print()
+        time.sleep(0.5)
+        self.dash("-")
+        time.sleep(0.5)
+        print("    GAME OBJECTIVE:")
+        time.sleep(0.7)
+
+        with open("objective.txt", "r") as file: # opens the objective file
+            for line in file:
+                words = line.split()
+                print("    ", end='')  #indentation for the text
+                for word in words:
+                    for char in word:
+                        print(char, end='', flush=True) #prints each character with a delay
+                        time.sleep(0.05)  
+                    print(' ', end='', flush=True)  #adds a space between words  
+                    time.sleep(0.05)
+                    if (word.endswith(',') or word.endswith('!')):
+                        time.sleep(0.4)
+                print()
+
+        self.dash("-")
+        time.sleep(2)
+
+        print("    COMMANDS:")
+        time.sleep(0.5)
+        print("   'move [direction]' - move around (north, south, east, west)")
+        time.sleep(0.5)
+        print("   'collect [item]' - collect the item in the room")
+        time.sleep(0.5)
+        print("   'use potion' - heal yourself using a potion")
+        time.sleep(0.5)
+        print("   'read note' - reads the note you've collected")
+        time.sleep(0.5)
+        print("   'inventory' - see what you've collected")
+        time.sleep(0.5)
+        print("   'save' - save your game")
+        time.sleep(0.5)
+        print("   'quit' - leave the game")
+        time.sleep(0.5)
+        self.dash("-")
+        print("")
 
     def check_locked_room(self, room, attempts=0):
         if 'locked' in self.rooms[room] and self.rooms[room]['locked']:
@@ -77,13 +156,13 @@ class g_func:
                 password = input(f"Enter the Pin (----): ")
                 if password == self.rooms[room].get('password', ''):
                     time.sleep(1)
-                    print(f"You've unlocked the {room}!")
+                    print(f"\nYou've unlocked the {room}!")
                     self.rooms[room]['locked'] = False
                     return False
                 else:
                     time.sleep(1)
                     attempts += 1
-                    print(f"Wrong password. {self.max_password_attempts - attempts} attempts left.")
+                    print(f"\nWrong password. {self.max_password_attempts - attempts} attempts left.")
             s = rd.choice(['north', 'south', 'east', 'west'])
             while True:
                 if s not in self.rooms[self.current_room]:
@@ -97,7 +176,9 @@ class g_func:
 
     def ghost(self):
         time.sleep(1)
-        print('\nOh no! A Ghost!')
+        print('\nOh no!',end='')
+        time.sleep(1)
+        print(' A Ghost!')
         time.sleep(1)
         print("The ghost attacks!")
         time.sleep(1)
@@ -108,7 +189,9 @@ class g_func:
             print("The ghost has defeated you! You died...")
             return True
         else:
-            print(f"You were attacked by a{s1}ghost.\nYour health is now {self.health}.")
+            print(f"You were attacked by a{s1}ghost.")
+            time.sleep(1)
+            print(f"Your health is now {self.health}.")
             time.sleep(1)
         return False
 
@@ -130,3 +213,26 @@ class g_func:
             print("Your health is already full. You can't use a potion now.")
         elif potions_count == 0:
             print("No potions in your inventory!")
+
+    def save(self, note_key, note_text):
+        with open(SAVE_FILE, 'w') as f:
+            json.dump({
+                'rooms': self.rooms,
+                'inventory': self.inventory,
+                'current_room': self.current_room,
+                'health': self.health,
+                'note_key': note_key,
+                'note_text': note_text
+            }, f)
+        print("Game saved.")
+
+    @classmethod
+    def load(cls):
+        with open(SAVE_FILE, 'r') as f:
+            data = json.load(f)
+        inst = cls()
+        inst.rooms = data['rooms']
+        inst.inventory = data['inventory']
+        inst.current_room = data['current_room']
+        inst.health = data['health']
+        return inst, data['note_key'], data['note_text']
