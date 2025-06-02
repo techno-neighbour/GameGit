@@ -15,7 +15,19 @@ You are a student staying as a paying guest in a mysterious house. Your patron t
 • Escape before time runs out!
 
 ## 🎮 How to Play
-To run the python script, type the following command in your terminal
+To run the python script:
+
+1. Open
+
+```cmd
+settings.py
+```
+
+2. Replace the "Your_path_to_..." line with the original file paths.
+
+3. Save the file
+
+4. Open your terminal and type
 
 ```cmd
 python game.py
@@ -35,16 +47,22 @@ Then use commands like:
 
 ## ⚙️ Requirements
 
-• Python 3.1 +
+• Python 3.1 and later versions
 ## 📁 File Structure
 
 ```
 
-├── main.py           # Game logic
+├── game.py           # Game logic
 
 ├── settings.py       # Room and note definitions
 
-└── README.md         # This file
+├── intro.txt         # Premise of the game
+
+├── objective.txt     # Game Objective
+
+├── LICENSE           # MIT License
+
+└── readme.md         # This file
 ```
 
 

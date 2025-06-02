@@ -1,0 +1,1 @@
+    Find 3 keys, avoid the ghosts, and escape before the timer runs out!
