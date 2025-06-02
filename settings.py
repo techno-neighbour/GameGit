@@ -19,14 +19,14 @@ class g_func:
             'Dining': {'north': 'Kitchen', 'east': 'Fireplace', 'south': 'Basement'},
             'Bedroom': {'east': 'Hallway', 'south': 'Tavern', 'north': 'Library'},
             'Fireplace': {'north': 'Pantry', 'west': 'Dining', 'east': 'Backyard', 'south': 'Washroom'},
-            'Washroom': {'east': 'Garden', 'west': 'Basement'},
+            'Washroom': {'east': 'Garden', 'west': 'Basement', 'north': 'Fireplace'},
             'Tavern': {'east': 'Guestroom', 'north': 'Bedroom'},
             'Guestroom': {'north': 'Hallway', 'west': 'Tavern'},
             'Sunroom': {'south': 'Foyer', 'west': 'Shrine'},
             'Library': {'north': 'Observatory', 'east': 'Hall', 'south': 'Bedroom'},
             'Observatory': {'south': 'Library', 'east': 'Shrine'},
             'Pantry': {'west': 'Kitchen', 'south': 'Fireplace'},
-            'Shrine': {'south': 'Hall', 'west': 'Observatory'},
+            'Shrine': {'south': 'Hall', 'west': 'Observatory', 'east': 'Sunroom'},
             'Basement': {'north': 'Dining', 'east': 'Washroom'},
             'Backyard': {'south': 'Garden', 'west': 'Fireplace'}
         }
@@ -94,7 +94,7 @@ class g_func:
                                     TEXT-BASED ADVENTURE GAME""")
         self.dash("=")
 
-        with open("Your_path_to_intro.txt", "r") as file: #opens the intro file
+        with open("intro.txt", "r") as file: #opens the intro file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
@@ -113,7 +113,7 @@ class g_func:
         print("    GAME OBJECTIVE:")
         time.sleep(0.7)
 
-        with open("Your_path_to_objective.txt", "r") as file: # opens the objective file
+        with open("objective.txt", "r") as file: # opens the objective file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
@@ -173,6 +173,28 @@ class g_func:
             self.current_room = self.rooms[self.current_room][s]
             return True
         return False
+    
+    def blueprint(self): 
+        layout = """                +-------------+     +--------+     +---------+
+                | Observatory |-----| Shrine |-----| Sunroom |
+                +-------------+     +--------+     +---------+
+                       |                 |              |
+                +-------------+     +--------+     +---------+      +------+
+                |   Library   |-----|  Hall  |-----|  Foyer  |------| Door |
+                +-------------+     +--------+     +---------+      +------+
+                        |                |              |
+                +-------------+     +---------+     +---------+    +--------+
+                |   Bedroom   |-----| Hallway |-----| Kitchen |----| Pantry |
+                +-------------+     +---------+     +---------+    +--------+
+                       |                 |               |              |
+                  +--------+       +-----------+    +--------+    +-----------+     +----------+
+                  | Tavern |-------| Guestroom |    | Dining |----| Fireplace |-----| Backyard |
+                  +--------+       +-----------+    +--------+    +-----------+     +----------+
+                                                         |               |               |
+                                                   +----------+     +----------+     +--------+
+                                                   | Basement |-----| Washroom |-----| Garden |
+                                                   +----------+     +----------+     +--------+ """
+        print(layout)
 
     def ghost(self):
         time.sleep(1)
