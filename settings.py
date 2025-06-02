@@ -94,7 +94,7 @@ class g_func:
                                     TEXT-BASED ADVENTURE GAME""")
         self.dash("=")
 
-        with open("intro.txt", "r") as file: #opens the intro file
+        with open("Your_path_to_intro.txt", "r") as file: #opens the intro file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
@@ -113,7 +113,7 @@ class g_func:
         print("    GAME OBJECTIVE:")
         time.sleep(0.7)
 
-        with open("objective.txt", "r") as file: # opens the objective file
+        with open("Your_path_to_objective.txt", "r") as file: # opens the objective file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
