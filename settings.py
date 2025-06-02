@@ -2,8 +2,6 @@ import time
 import random as rd
 import json
 
-SAVE_FILE = 'save.json'
-
 class g_func:
     ghost_damage = {
         'strong': 40,
@@ -236,7 +234,7 @@ class g_func:
         elif potions_count == 0:
             print("No potions in your inventory!")
 
-    def save(self, note_key, note_text):
+    def save(self, note_key, note_text, SAVE_FILE):
         with open(SAVE_FILE, 'w') as f:
             json.dump({
                 'rooms': self.rooms,
@@ -249,7 +247,7 @@ class g_func:
         print("Game saved.")
 
     @classmethod
-    def load(cls):
+    def load(cls, SAVE_FILE):
         with open(SAVE_FILE, 'r') as f:
             data = json.load(f)
         inst = cls()

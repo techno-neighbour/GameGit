@@ -26,7 +26,7 @@ if os.path.exists(SAVE_FILE):
     time.sleep(1)
 
     if choice == 'yes': # if user wants to load the last save
-        ss, n, nk = ss.load()
+        ss, n, nk = ss.load(SAVE_FILE)
         time.sleep(1)
         print("Loading your last save",end="", flush=True)
         time.sleep(1)
@@ -146,7 +146,7 @@ while not time_up:
         break
 
     elif action == 'save':
-        ss.save(n, nk)
+        ss.save(n, nk, SAVE_FILE)
 
     elif action == 'inventory':
         potions = ss.inventory.get('potion', 0)
