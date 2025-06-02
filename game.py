@@ -127,7 +127,10 @@ while not time_up:
     command = input("\nWhat's your move? ").lower().split()
     print()
     time.sleep(1)
-    if not command:
+    if not command: # if no command is given
+        print('Invalid command.')
+        time.sleep(1)
+        print('Please enter a valid command')
         continue
 
     if time_up:
@@ -137,7 +140,9 @@ while not time_up:
     action = command[0]
 
     if action == 'quit':
-        print("You chose to die! May your soul be at peace.")
+        print("You chose to die! ", end='', flush=True)
+        time.sleep(1)
+        print("May your soul be at peace.")
         break
 
     elif action == 'save':
@@ -156,7 +161,9 @@ while not time_up:
 
             if ss.current_room == 'Foyer' and direction == 'east' and ss.inventory.get('key', 0) < ss.required_keys:
                 time.sleep(1)
-                print("\nThe Door won't open! You need all 3 keys.")
+                print("\nThe Door won't open! ")
+                time.sleep(1)
+                print("You need all 3 keys to open the Door.")
             else:
                 ss.current_room = room_data[direction]
                 time.sleep(1)
@@ -184,6 +191,9 @@ while not time_up:
 
     elif action == 'use' and len(command) > 1 and command[1] == 'potion':
         ss.use_potion()
+
+    elif action == 'map':
+        ss.blueprint()
 
     else:
         print('Invalid command. Please enter a valid direction, item, or action.')
