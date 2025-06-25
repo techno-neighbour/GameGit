@@ -140,6 +140,8 @@ class g_func:
         time.sleep(0.5)
         print("   'inventory' - see what you've collected")
         time.sleep(0.5)
+        print("   'map' - see the blueprint of the house")
+        time.sleep(0.5)
         print("   'save' - save your game")
         time.sleep(0.5)
         print("   'quit' - leave the game")
