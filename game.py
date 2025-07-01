@@ -92,7 +92,6 @@ else:
         'Hall': {'south': 'Hallway', 'east': 'Foyer', 'west': 'Library', 'north': 'Shrine'},
         'Hallway': {'north': 'Hall', 'east': 'Kitchen', 'south': 'Guestroom', 'west': 'Bedroom'}
     })
-
 ss.game_intro() # game premise and instructions
 
 def countdown_timer(): # game time limit
@@ -156,16 +155,17 @@ while not time_up:
     elif action == 'move' and len(command) > 1:
         direction = command[1]
         if direction in room_data:
-            if 'ghost' in room_data:
-                room_data['attacked'] = False
+            next_room = room_data[direction] # stores the next room data based on the direction
 
             if ss.current_room == 'Foyer' and direction == 'east' and ss.inventory.get('key', 0) < ss.required_keys:
                 time.sleep(1)
-                print("\nThe Door won't open! ")
-                time.sleep(1)
-                print("You need all 3 keys to open the Door.")
+                print("The Door won't open! You need all 3 keys.")
             else:
-                ss.current_room = room_data[direction]
+                # resets attack status only when actually leaving
+                if 'ghost' in room_data:
+                    room_data['attacked'] = False
+
+                ss.current_room = next_room
                 time.sleep(1)
                 print(f"You moved to the {ss.current_room}.")
         else:

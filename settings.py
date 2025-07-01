@@ -32,10 +32,13 @@ class g_func:
         self.note = {
             '1234': 'The way you count, is the way you go out.',
             '2020': 'The year that locked the world down, may unlock your door.',
-            '1357': 'The oddity of time is the key to unlocking the unknown.',
+            '1357': 'The oddity of the line is the key to unlocking the unknown.',
             '3141': 'Follow the circle to your path of freedom, but with a constant effort.',
             '1711': "A journey marked one the first and last, but with a week's effort in.",
             '8080': 'Infinity repeats, with and without a belt, but within it, lies your finite path.',
+            '0001': 'From nothing, the first spark breaks the infinite silence.',
+            '1123': 'The consequences of the future is the sum of your past.',
+            '3690': 'Tesla’s trinity dances in circles, follow their hum to nothingness.',
             '3333': 'Infinity divided into pieces, make your choice with thesis.',
             '1010': 'A decade in the dual-bit system, is your algorithm.',
             '2357': 'Small, yet indivisible forces stand in your way to freedom.',
@@ -89,10 +92,10 @@ class g_func:
     def game_intro(self):
         time.sleep(1)
         print("""
-                                    TEXT-BASED ADVENTURE GAME""")
+                                TEXT-BASED ADVENTURE GAME""")
         self.dash("=")
 
-        with open("Your_path_to_intro.txt", "r") as file: #opens the intro file
+        with open("intro.txt", "r") as file: #opens the intro file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
@@ -102,7 +105,7 @@ class g_func:
                         time.sleep(0.05)  
                     print(' ', end='', flush=True)  #adds a space between words
                     time.sleep(0.05)  
-                    if word.endswith('.'):
+                    if word.endswith('.') or word.endswith(','):
                         time.sleep(0.5)
                 print()
         time.sleep(0.5)
@@ -111,7 +114,7 @@ class g_func:
         print("    GAME OBJECTIVE:")
         time.sleep(0.7)
 
-        with open("Your_path_to_objective.txt", "r") as file: # opens the objective file
+        with open("objective.txt", "r") as file: # opens the objective file
             for line in file:
                 words = line.split()
                 print("    ", end='')  #indentation for the text
@@ -122,7 +125,7 @@ class g_func:
                     print(' ', end='', flush=True)  #adds a space between words  
                     time.sleep(0.05)
                     if (word.endswith(',') or word.endswith('!')):
-                        time.sleep(0.4)
+                        time.sleep(0.45)
                 print()
 
         self.dash("-")
